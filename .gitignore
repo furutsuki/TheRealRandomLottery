@@ -1,1 +1,6 @@
 /bin/
+
+#IDEA
+*.iml
+.idea
+/out/*
