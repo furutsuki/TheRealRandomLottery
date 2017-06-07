@@ -12,13 +12,12 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
 
-        List<int[]> lotteries = Lottery.getRandomNumber(7, 4, 35);
-        for (int[] lottery : lotteries) {
-            for (int number : lottery) {
-                System.out.print(number + " ");
-            }
-            System.out.println();
+        List<List<Integer>> lotteries = Lottery.getRandomNumber(7, 4, 35);
+        for (List<Integer> lottery : lotteries) {
+            System.out.println(lottery);
         }
+
+
 
     }
 }

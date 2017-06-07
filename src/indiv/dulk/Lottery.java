@@ -1,9 +1,6 @@
 package indiv.dulk;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Lottery.
@@ -23,18 +20,20 @@ public class Lottery {
      * @param scope 彩票号码的最大值
      * @return
      */
-    public static List<int[]> getRandomNumber(int size, int groups, int scope) {
+    public static List<List<Integer>> getRandomNumber(int size, int groups, int scope) {
         long seed = new Date().getTime();
-        List<int[]> lotteries = new ArrayList<int[]>();
+        List<List<Integer>> lotteries = new ArrayList<List<Integer>>();
 
         for (int i = 0; i < groups; i++) {
+            TreeSet lottery = new TreeSet();
             Random random = new Random(seed);
-            int[] lottery = new int[size];
-            for (int j = 0; j < size; j++) {
-                lottery[j] = random.nextInt(scope) + 1;
+            while (lottery.size() != size) {
+                lottery.add(random.nextInt(scope) + 1);
             }
-            lotteries.add(CommonUtil.sort(lottery));
             seed++;
+            List<Integer> bean = new ArrayList<Integer>();
+            bean.addAll(lottery);
+            lotteries.add(bean);
         }
 
         return lotteries;
