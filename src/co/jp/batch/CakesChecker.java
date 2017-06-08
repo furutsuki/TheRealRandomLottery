@@ -19,9 +19,10 @@ public class CakesChecker extends AbstractPublic {
 	 *            行ごとに項目の個数
 	 * @param cakesPath
 	 *            cakesのパス
+	 * @throws IOException
 	 */
-	private void checkCakes(int rowLen, String cakesPath) {
-		String flowerFilePath = "d:\\flower.csv";
+	private void checkCakes(int rowLen, String cakesPath) throws IOException {
+		String flowerFilePath = "c:\\csv\\flower.csv";
 		List<List<String>> flowerList = new ArrayList<List<String>>();
 		List<List<String>> cakesList = new ArrayList<List<String>>();
 		flowerList = getDataList(flowerFilePath, rowLen);
@@ -37,8 +38,9 @@ public class CakesChecker extends AbstractPublic {
 	 * @param rowLen
 	 *            行ごとに項目の個数
 	 * @return
+	 * @throws IOException
 	 */
-	private List<List<String>> getDataList(String filePath, int rowLen) {
+	private List<List<String>> getDataList(String filePath, int rowLen) throws IOException {
 		List<List<String>> dataList = new ArrayList<List<String>>();
 		File dataFile = new File(filePath);
 		if (!dataFile.exists()) {
@@ -68,10 +70,12 @@ public class CakesChecker extends AbstractPublic {
 					e.printStackTrace();
 				}
 			}
+			br.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		return dataList;
 	}
 
@@ -115,13 +119,13 @@ public class CakesChecker extends AbstractPublic {
 			System.out.println("its regret that you can't hit this shit.");
 		}
 	}
-	
+
 
 
 	@Override
 	public int execute(Map<String, String> paramMap) throws Exception {
 		// 未完成
-		String filepath = "d:\\cakes.csv";
+		String filepath = "c:\\csv\\cakes.csv";
 		checkCakes(7,filepath);
 		return 0;
 	}

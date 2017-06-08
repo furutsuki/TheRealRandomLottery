@@ -9,12 +9,13 @@ import co.jp.Interface.IAbstractPublic;
 public abstract class AbstractPublic implements IAbstractPublic{
 	protected int absExecute(Map<String, String> argsMap) {
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS ");
 		String strDate = sdf.format(cal.getTime());
 		System.out.println(strDate + ":処理を開始します。");
 		int ret = 0;
 		try {
 			ret = execute(argsMap);
+			cal = Calendar.getInstance();
 			strDate = sdf.format(cal.getTime());
 			if (ret < 10) {
 				System.out.println(strDate + ":処理正常終了。");
@@ -22,6 +23,7 @@ public abstract class AbstractPublic implements IAbstractPublic{
 				System.out.println(strDate + ":処理異常終了。");
 			}
 		} catch (Exception e) {
+			cal = Calendar.getInstance();
 			strDate = sdf.format(cal.getTime());
 			System.out.println(strDate + ":生成処理が失敗しました");
 			e.printStackTrace();

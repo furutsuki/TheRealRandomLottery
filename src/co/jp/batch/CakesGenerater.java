@@ -40,7 +40,7 @@ public class CakesGenerater extends AbstractPublic {
 			List<Integer> list = new ArrayList<Integer>();
 			while (counter < rowLen) {
 				random.setSeed(seeds);
-				int cake = random.nextInt(36);
+				int cake = random.nextInt(38);
 				if (!list.contains(cake) && 0 != cake) {
 					list.add(cake);
 					counter++;
@@ -53,7 +53,7 @@ public class CakesGenerater extends AbstractPublic {
 			counter = 0;
 			CakesList.add(list);
 		}
-		
+
 		System.out.println("乱数取得回数：" + realCount);
 		return CakesList;
 	}
@@ -61,12 +61,12 @@ public class CakesGenerater extends AbstractPublic {
 	@Override
 	public int execute(Map<String, String> paramMap) throws Exception {
 		System.out.println("start to write Csv file.");
-		String filepath = "D:\\cakes.csv";
+		String filepath = "c:\\csv\\cakes.csv";
 		File file = new File(filepath);
 		if (file.exists()) {
-			CommonUtil.writeCsv(filepath, generateCakes(1500000, 40, 7), SaveMode.ADD);
+			CommonUtil.writeCsv(filepath, generateCakes(5000000, 40, 7), SaveMode.ADD);
 		} else {
-			CommonUtil.writeCsv(filepath, generateCakes(1500000, 40, 7), SaveMode.NEWFILE);
+			CommonUtil.writeCsv(filepath, generateCakes(5000000, 40, 7), SaveMode.NEWFILE);
 		}
 		System.out.println("Csv file 出力処理完了。");
 		return 0;
