@@ -1,4 +1,4 @@
-package indiv.dulk;
+package co.jp.batch;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public class Lottery {
         List<List<Integer>> lotteries = new ArrayList<List<Integer>>();
 
         for (int i = 0; i < groups; i++) {
-            TreeSet lottery = new TreeSet();
+            TreeSet<Integer> lottery = new TreeSet<Integer>();
             Random random = new Random(seed);
             while (lottery.size() != size) {
                 lottery.add(random.nextInt(scope) + 1);
