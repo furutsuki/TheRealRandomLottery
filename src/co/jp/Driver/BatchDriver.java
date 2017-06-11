@@ -8,8 +8,9 @@ public class BatchDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//String[] strParameter= {"CakesGenerater","PARAM1:deng chao wo"};
-		String[] strParameter= {"CakesChecker","PARAM1:deng chao wo"};
+//		String[] strParameter= {"CakesGenerater","PARAM1:deng chao wo"};
+//		String[] strParameter= {"CakesChecker","PARAM1:deng chao wo"};
+		String[] strParameter = {"Lottery", "size:7", "group:1000000", "scope:37"};
 		Main.main(strParameter);
 	}
 

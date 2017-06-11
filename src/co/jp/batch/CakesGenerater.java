@@ -64,9 +64,9 @@ public class CakesGenerater extends AbstractPublic {
 		String filepath = "c:\\csv\\cakes.csv";
 		File file = new File(filepath);
 		if (file.exists()) {
-			CommonUtil.writeCsv(filepath, generateCakes(5000000, 40, 7), SaveMode.ADD);
+			CommonUtil.writeCsv(filepath, generateCakes(1000000, 40, 7), SaveMode.ADD);
 		} else {
-			CommonUtil.writeCsv(filepath, generateCakes(5000000, 40, 7), SaveMode.NEWFILE);
+			CommonUtil.writeCsv(filepath, generateCakes(1000000, 40, 7), SaveMode.NEWFILE);
 		}
 		System.out.println("Csv file 出力処理完了。");
 		return 0;
