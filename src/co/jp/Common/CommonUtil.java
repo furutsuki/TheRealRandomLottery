@@ -68,7 +68,6 @@ public class CommonUtil {
 					sb.append(cnvObjToString(val));
 					index++;
 				}
-
 				// 行書き込み
 				pw.println(sb.toString());
 			}
@@ -83,13 +82,43 @@ public class CommonUtil {
 		}
 	}
 	
-	private static String cnvObjToString(Object arg) {
+	public static String cnvObjToString(Object arg) {
 		if (arg != null) {
 			return arg.toString();
 		}
 		return "";
 	}
 	
+	public static String rpad(String target, int len, char paddingChar)
+	  {
+	    if (target == null) {
+	      target = "";
+	    }
+	    if ((target != null) && (target.length() >= len)) {
+	      return target;
+	    }
+	    StringBuilder buffer = new StringBuilder(target);
+	    for (int i = 0; i < len - target.length(); i++) {
+	      buffer.append(paddingChar);
+	    }
+	    return buffer.toString();
+	  }
+	
+	  public static String lpad(String target, int len, char paddingChar)
+	  {
+	    if (target == null) {
+	      target = "";
+	    }
+	    if ((target != null) && (target.length() >= len)) {
+	      return target;
+	    }
+	    StringBuilder buffer = new StringBuilder();
+	    for (int i = 0; i < len - target.length(); i++) {
+	      buffer.append(paddingChar);
+	    }
+	    buffer.append(target);
+	    return buffer.toString();
+	  }
 
 }
-// CodeCheck  ver1.1.10: 0a68bd7692cf1628fa44aea219a34b40198964101af7ec0d2ee5044cc897b734
+// CodeCheck  ver1.1.10: 9d3e376a30a8846452c74db5d443ce021732c1bf3690f458bf3da95ec3e53e26

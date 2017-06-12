@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import co.jp.Abstract.AbstractPublic;
+import co.jp.Common.CommonUtil;
+import co.jp.Common.Constants;
 
 public class CakesChecker extends AbstractPublic {
 	/**
@@ -60,7 +62,7 @@ public class CakesChecker extends AbstractPublic {
 							return null;
 						}
 						for (String element : rowTmp) {
-							row.add(element);
+							row.add(CommonUtil.lpad(element, 2, '0'));
 						}
 						dataList.add(row);
 					} else {
@@ -119,6 +121,90 @@ public class CakesChecker extends AbstractPublic {
 			System.out.println("its regret that you can't hit this shit.");
 		}
 	}
+	
+	/**
+	 * 突合せ処理
+	 *
+	 * @param cakesList
+	 *            cakesのリスト
+	 * @param flowerList
+	 *            flowerのリスト
+	 * @return
+	 */
+	private List<String> buttByRow(List<String> cake, List<String> flower) {
+		// 戻す型としてjavaBean追加
+		if (null == flower || null == cake ) {
+			System.out.println("format error.");
+			return null;
+		}
+		if(cake.containsAll(flower)) {
+			return cake;
+		} else {
+			return null;
+		}
+		
+	}
+	
+	private void checkByRow(String filepath) throws IOException {
+		String flowerFilePath = "c:\\csv\\flower.csv";
+		int rowLen = 7;
+		int count = 0;
+		List<String> flower = new ArrayList<String>();
+		List<List<String>> sunfloweres = new ArrayList<List<String>>();
+		flower = getDataList(flowerFilePath, rowLen).get(0);
+		File dataFile = new File(filepath);
+		if (!dataFile.exists()) {
+			System.out.println("ファイルが存在しません:" + filepath);
+		}
+		try (FileReader fr = new FileReader(filepath);
+			 BufferedReader br = new BufferedReader(fr);) {
+			while (true) {
+				try {
+					String strline = br.readLine();
+					if (strline != null) {
+						count++;
+						List<String> row = new ArrayList<String>();
+						List<String> result = new ArrayList<String>();
+						String[] rowTmp = strline.split(",");
+						if (rowTmp.length != rowLen) {
+							System.out.println("CSVファイルの項目数が合わない。");
+							break;
+						}
+						for (String element : rowTmp) {
+							row.add(CommonUtil.lpad(element, 2, '0'));
+						}
+						result = buttByRow(row, flower);
+						if (null != result) {
+							result.add(0, String.valueOf(count));
+							sunfloweres.add(result);
+						}
+						if (count % Constants.MSG_COUNT == 0) {
+							System.out.println(count + " records checked.");
+						}
+						
+					} else {
+						break;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("totally " + count + " records checked.");
+		if (sunfloweres.size() > 0) {
+			System.out.println("Congratulations!");
+			for (List<String> sunflower : sunfloweres) {
+				System.out.println(sunflower.get(0) + " row:");
+				sunflower.remove(0);
+				System.out.println(sunflower.toString());
+			}
+		} else {
+			System.out.println("its regret that you can't hit this shit.");
+		}
+	}
 
 
 
@@ -126,8 +212,8 @@ public class CakesChecker extends AbstractPublic {
 	public int execute(Map<String, String> paramMap) throws Exception {
 		// 未完成
 		String filepath = "c:\\csv\\cakes.csv";
-		checkCakes(7,filepath);
+		//checkCakes(7,filepath);
+		checkByRow(filepath);
 		return 0;
 	}
 }
-// CodeCheck  ver1.1.10: 38f5ce63bf6bf482a48fbb231f27517c620ad09c419e2dcc08fd8d057153dbf7

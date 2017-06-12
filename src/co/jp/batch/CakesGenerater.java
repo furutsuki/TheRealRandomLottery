@@ -9,10 +9,12 @@ import java.util.Map;
 
 import co.jp.Abstract.AbstractPublic;
 import co.jp.Common.CommonUtil;
+import co.jp.Common.Constants;
 import co.jp.Enums.SaveMode;
 
 public class CakesGenerater extends AbstractPublic {
-
+	// 生成する組数を制御するためのカウンター
+	private int pairs = 0;
 	/**
 	 * CAKESの組み合わせを生成する
 	 *
@@ -32,11 +34,11 @@ public class CakesGenerater extends AbstractPublic {
 		// 実際ループの回数を記録
 		int realCount = 0;
 		// 生成する組数を制御するためのカウンター
-		int pairs = 0;
+		int tmprows = 0;
 		// 返すためのList
 		List<List<Integer>> CakesList = new ArrayList<List<Integer>>();
 
-		while (num > pairs) {
+		while (num > tmprows) {
 			List<Integer> list = new ArrayList<Integer>();
 			while (counter < rowLen) {
 				random.setSeed(seeds);
@@ -50,8 +52,12 @@ public class CakesGenerater extends AbstractPublic {
 			}
 			Collections.sort(list);
 			pairs++;
+			tmprows++;
 			counter = 0;
 			CakesList.add(list);
+			if (pairs % Constants.MSG_COUNT == 0) {
+				System.out.println(pairs + " cakes generated.");
+			}
 		}
 
 		System.out.println("乱数取得回数：" + realCount);
@@ -62,15 +68,26 @@ public class CakesGenerater extends AbstractPublic {
 	public int execute(Map<String, String> paramMap) throws Exception {
 		System.out.println("start to write Csv file.");
 		String filepath = "c:\\csv\\cakes.csv";
+		int rows = Integer.valueOf(paramMap.get("rows"));
 		File file = new File(filepath);
-		if (file.exists()) {
-			CommonUtil.writeCsv(filepath, generateCakes(1000000, 40, 7), SaveMode.ADD);
-		} else {
-			CommonUtil.writeCsv(filepath, generateCakes(1000000, 40, 7), SaveMode.NEWFILE);
+		while (rows > 0) {
+			int tmp = 0;
+			if (rows >= Constants.LIMIT_COUNT) {
+				tmp = Constants.LIMIT_COUNT;
+				rows -= Constants.LIMIT_COUNT;
+			} else {
+				tmp = rows;
+			}
+			if (file.exists()) {
+				CommonUtil.writeCsv(filepath, generateCakes(tmp, 40, 7), SaveMode.ADD);
+			} else {
+				CommonUtil.writeCsv(filepath, generateCakes(tmp, 40, 7), SaveMode.NEWFILE);
+			}
 		}
+
 		System.out.println("Csv file 出力処理完了。");
 		return 0;
 	}
 
 }
-// CodeCheck  ver1.1.10: 7d0926ad9cf0df6afe7e1a972ed71de3bb7041177bb8d798033ae91deff11677
+// CodeCheck  ver1.1.10: b1804377386d9efb99133ad12679d6f869fb0cd643bf21d048cb48c1be9a3b79
