@@ -15,13 +15,13 @@ import java.util.Random;
 import java.util.TreeSet;
 
 /**
- * Lottery.
+ * LotteryGenerater.
  *
  * @author Dulk
  * @date 17-6-6
  * @version 20170608
  */
-public class Lottery extends AbstractPublic{
+public class LotteryGenerater extends AbstractPublic{
 
 
     /**
@@ -51,6 +51,13 @@ public class Lottery extends AbstractPublic{
         return lotteries;
     }
 
+    /**
+     * List<List<Integer>>格式输出为csv文件
+     *
+     * @param lists
+     * @param filePath
+     * @throws IOException
+     */
     private static void listsToCSV(List<List<Integer>> lists, String filePath) throws IOException {
         File file = new File(filePath);
         if (file.exists()) {
@@ -76,8 +83,6 @@ public class Lottery extends AbstractPublic{
         bw.flush();
         bw.close();
     }
-
-
 
     @Override
     public int execute(Map<String, String> paramMap) throws Exception {
