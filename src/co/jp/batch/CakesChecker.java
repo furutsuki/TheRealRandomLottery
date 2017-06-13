@@ -10,28 +10,19 @@ import java.util.List;
 import java.util.Map;
 
 import co.jp.Abstract.AbstractPublic;
+import co.jp.Bean.PeoniesBean;
 import co.jp.Common.CommonUtil;
 import co.jp.Common.Constants;
 
 public class CakesChecker extends AbstractPublic {
-	/**
-	 * CAKESとFLOWERの取得および突合せ処理
-	 *
-	 * @param rowLen
-	 *            行ごとに項目の個数
-	 * @param cakesPath
-	 *            cakesのパス
-	 * @throws IOException
-	 */
-	private void checkCakes(int rowLen, String cakesPath) throws IOException {
-		String flowerFilePath = "c:\\csv\\flower.csv";
-		List<List<String>> flowerList = new ArrayList<List<String>>();
-		List<List<String>> cakesList = new ArrayList<List<String>>();
-		flowerList = getDataList(flowerFilePath, rowLen);
-		cakesList = getDataList(cakesPath, rowLen);
-		butt(cakesList, flowerList);
+	private int counter = 0;
+	@Override
+	public int execute(Map<String, String> paramMap) throws Exception {
+		// 未完成
+		String filepath = "c:\\csv\\cakes.csv";
+		resultPrintOut(checkByRow(filepath));
+		return 0;
 	}
-
 	/**
 	 * CSVファイルを読み込んで、データを取得する処理
 	 *
@@ -90,67 +81,34 @@ public class CakesChecker extends AbstractPublic {
 	 *            flowerのリスト
 	 * @return
 	 */
-	private void butt(List<List<String>> cakesList, List<List<String>> flowerList) {
-		// 戻す型としてjavaBean追加
-		if (null == flowerList || null == cakesList ) {
-			System.out.println("format error.");
-			return;
-		}
-		List<String> flower = flowerList.get(0);
-		List<List<String>> sunfloweres = new ArrayList<List<String>>();
-		int cnt = 0;
-		for (List<String> cake:cakesList) {
-			cnt++;
-			if(cake.containsAll(flower)) {
-				cake.add(0, String.valueOf(cnt));
-				sunfloweres.add(cake);
-			}
-			if (cnt % 100000 == 0) {
-				System.out.println(cnt + " records checked.");
-			}
-		}
-		System.out.println("totally " + cnt + " records checked.");
-		if (sunfloweres.size() > 0) {
-			System.out.println("Congratulations!");
-			for (List<String> sunflower : sunfloweres) {
-				System.out.println(sunflower.get(0) + " row:");
-				sunflower.remove(0);
-				System.out.println(sunflower.toString());
-			}
-		} else {
-			System.out.println("its regret that you can't hit this shit.");
-		}
-	}
-	
-	/**
-	 * 突合せ処理
-	 *
-	 * @param cakesList
-	 *            cakesのリスト
-	 * @param flowerList
-	 *            flowerのリスト
-	 * @return
-	 */
-	private List<String> buttByRow(List<String> cake, List<String> flower) {
+	private int buttByRow(List<String> cake, List<String> flower) {
+		int count = 0;
 		// 戻す型としてjavaBean追加
 		if (null == flower || null == cake ) {
 			System.out.println("format error.");
-			return null;
+			return 0;
 		}
-		if(cake.containsAll(flower)) {
-			return cake;
-		} else {
-			return null;
+		for (String piece : cake) {
+			if (flower.contains(piece)) {
+				count++;
+			}
 		}
+		return count;
 		
 	}
 	
-	private void checkByRow(String filepath) throws IOException {
+	private PeoniesBean checkByRow(String filepath) throws IOException {
 		String flowerFilePath = "c:\\csv\\flower.csv";
+		// 牡丹BEAN
+		PeoniesBean pb = new PeoniesBean();
 		int rowLen = 7;
-		int count = 0;
 		List<String> flower = new ArrayList<String>();
-		List<List<String>> sunfloweres = new ArrayList<List<String>>();
+		List<List<String>> sunfloweres_1 = new ArrayList<List<String>>();
+		List<List<String>> sunfloweres_2 = new ArrayList<List<String>>();
+		List<List<String>> sunfloweres_3 = new ArrayList<List<String>>();
+		pb.setFirstClass(sunfloweres_1);
+		pb.setSecondClass(sunfloweres_2);
+		pb.setThirdClass(sunfloweres_3);
 		flower = getDataList(flowerFilePath, rowLen).get(0);
 		File dataFile = new File(filepath);
 		if (!dataFile.exists()) {
@@ -162,9 +120,9 @@ public class CakesChecker extends AbstractPublic {
 				try {
 					String strline = br.readLine();
 					if (strline != null) {
-						count++;
+						counter++;
 						List<String> row = new ArrayList<String>();
-						List<String> result = new ArrayList<String>();
+						int endCode = 0;
 						String[] rowTmp = strline.split(",");
 						if (rowTmp.length != rowLen) {
 							System.out.println("CSVファイルの項目数が合わない。");
@@ -173,13 +131,12 @@ public class CakesChecker extends AbstractPublic {
 						for (String element : rowTmp) {
 							row.add(CommonUtil.lpad(element, 2, '0'));
 						}
-						result = buttByRow(row, flower);
-						if (null != result) {
-							result.add(0, String.valueOf(count));
-							sunfloweres.add(result);
-						}
-						if (count % Constants.MSG_COUNT == 0) {
-							System.out.println(count + " records checked.");
+						endCode = buttByRow(row, flower);
+
+						setPeoniesBean(pb,row,endCode,counter);
+						
+						if (counter % Constants.MSG_COUNT == 0) {
+							System.out.println(counter + " records checked.");
 						}
 						
 					} else {
@@ -193,27 +150,52 @@ public class CakesChecker extends AbstractPublic {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("totally " + count + " records checked.");
-		if (sunfloweres.size() > 0) {
+		System.out.println("totally " + counter + " records checked.");
+		return pb;
+	}
+	
+	private void setPeoniesBean(PeoniesBean pb, List<String> row, int level, int count) {
+		
+		if (Constants.LEVEL_1 == level) {
+			row.add(0,String.valueOf(count));
+			pb.getFirstClass().add(row);
+		} else if (Constants.LEVEL_2 == level) {
+			row.add(0,String.valueOf(count));
+			pb.getSecondClass().add(row);
+		} else if (Constants.LEVEL_3 == level) {
+			row.add(0,String.valueOf(count));
+			pb.getThirdClass().add(row);
+		}
+	}
+	
+	private void resultPrintOut(PeoniesBean pb) {
+		List<List<String>> sunfloweres_1 = pb.getFirstClass();
+		List<List<String>> sunfloweres_2 = pb.getSecondClass();
+		List<List<String>> sunfloweres_3 = pb.getThirdClass();
+		int count1 = sunfloweres_1.size();
+		int count2 = sunfloweres_2.size();
+		int count3 = sunfloweres_3.size();
+		int count = count1 + count2 + count3;
+		long cost = Constants.PRICE*counter;
+		long award = Constants.AWARD_1 * count1 + Constants.AWARD_2 * count2 + Constants.AWARD_3 * count3;
+		if (count > 0) {
 			System.out.println("Congratulations!");
-			for (List<String> sunflower : sunfloweres) {
-				System.out.println(sunflower.get(0) + " row:");
+			System.out.println("LEVEL1 : " + count1);
+			System.out.println("LEVEL2 : " + count2);
+			System.out.println("LEVEL3 : " + count3);
+			for (List<String> sunflower : sunfloweres_1) {
+				System.out.println("LEVEL1 IN " + sunflower.get(0) + " row:");
 				sunflower.remove(0);
 				System.out.println(sunflower.toString());
 			}
+
 		} else {
 			System.out.println("its regret that you can't hit this shit.");
 		}
+		System.out.println("total cost: " + cost);
+		System.out.println("total earned: " + award);
+		
 	}
-
-
-
-	@Override
-	public int execute(Map<String, String> paramMap) throws Exception {
-		// 未完成
-		String filepath = "c:\\csv\\cakes.csv";
-		//checkCakes(7,filepath);
-		checkByRow(filepath);
-		return 0;
-	}
+	
 }
+// CodeCheck  ver1.1.10: 7c911b42180831a6c7bbadeac0879af13d0c9a819972cb3c91cfdd546ad831e4

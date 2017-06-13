@@ -77,6 +77,7 @@ public class CakesGenerater extends AbstractPublic {
 				rows -= Constants.LIMIT_COUNT;
 			} else {
 				tmp = rows;
+				rows = 0;
 			}
 			if (file.exists()) {
 				CommonUtil.writeCsv(filepath, generateCakes(tmp, 40, 7), SaveMode.ADD);
@@ -84,10 +85,12 @@ public class CakesGenerater extends AbstractPublic {
 				CommonUtil.writeCsv(filepath, generateCakes(tmp, 40, 7), SaveMode.NEWFILE);
 			}
 		}
+		
+		System.out.println("totally " + pairs + " cakes generated.");
 
 		System.out.println("Csv file 出力処理完了。");
 		return 0;
 	}
 
 }
-// CodeCheck  ver1.1.10: b1804377386d9efb99133ad12679d6f869fb0cd643bf21d048cb48c1be9a3b79
+// CodeCheck  ver1.1.10: c6465e9daec5a7affc737d5430cfbdbc3bac71b6eb50c1c1acb26099f31652a9
