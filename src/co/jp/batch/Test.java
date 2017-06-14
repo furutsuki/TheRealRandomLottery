@@ -1,6 +1,9 @@
 package co.jp.batch;
 
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 /**
  * Test.
  *

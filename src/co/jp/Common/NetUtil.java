@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
@@ -52,7 +51,7 @@ public class NetUtil {
         conn.setRequestProperty("Accept-Language", "zh-CN");
         conn.setRequestProperty("User-Agent", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
         conn.setRequestProperty("Proxy-Connection", "Keep-Alive");
-        if (requestMethod != null && requestMethod.equals("POST")) {
+        if ("POST".equals(requestMethod)) {
             conn.setDoOutput(true);
             conn.setDoInput(true);
         }

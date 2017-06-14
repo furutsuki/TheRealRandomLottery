@@ -7,12 +7,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.TreeSet;
 
 /**
  * LotteryGenerater.
@@ -27,25 +26,48 @@ public class LotteryGenerater extends AbstractPublic{
     /**
      * 彩票号码随机生成
      *
-     * @param size 每组的号码数量
      * @param groups 需要生成的组数
-     * @param scope 彩票号码的最大值
+     * @param type 彩票类型
      * @return
      */
-    private static List<List<Integer>> getRandomNumber(int size, int groups, int scope) {
-        long seed = new Date().getTime();
+    private static List<List<Integer>> getRandomLotteries(int groups, String type) {
         List<List<Integer>> lotteries = new ArrayList<List<Integer>>();
+        SecureRandom secureRandom = new SecureRandom();
 
         for (int i = 0; i < groups; i++) {
-            TreeSet<Integer> lottery = new TreeSet<Integer>();
-            Random random = new Random(seed);
-            while (lottery.size() != size) {
-                lottery.add(random.nextInt(scope) + 1);
+            List<Integer> lottery = new ArrayList<Integer>();
+
+            switch (type) {
+                //超级大乐透
+                case "dlt":
+                    while (lottery.size() != 5) {
+                        int number = secureRandom.nextInt(35) + 1;
+                        if (lottery.contains(number)) {
+                            continue;
+                        } else {
+                            lottery.add(number);
+                        }
+                    }
+                    Collections.sort(lottery);
+                    int bean1 = secureRandom.nextInt(12) + 1;
+                    int bean2 = secureRandom.nextInt(12) + 1;
+                    while (bean1 == bean2) {
+                        bean2 = secureRandom.nextInt(12) + 1;
+                    }
+                    if (bean1 < bean2) {
+                        lottery.add(bean1);
+                        lottery.add(bean2);
+                    } else {
+                        lottery.add(bean2);
+                        lottery.add(bean1);
+                    }
+                    break;
+
+                default:
+                    return null;
             }
-            seed++;
-            List<Integer> bean = new ArrayList<Integer>();
-            bean.addAll(lottery);
-            lotteries.add(bean);
+
+            lotteries.add(lottery);
         }
 
         return lotteries;
@@ -86,12 +108,11 @@ public class LotteryGenerater extends AbstractPublic{
 
     @Override
     public int execute(Map<String, String> paramMap) throws Exception {
-        int size = Integer.parseInt(paramMap.get("size"));
         int group = Integer.parseInt(paramMap.get("group"));
-        int scope = Integer.parseInt(paramMap.get("scope"));
+        String type = paramMap.get("type");
         String filePath = "c:/csv/lotteries.csv";
 
-        listsToCSV(getRandomNumber(size, group, scope), filePath);
+        listsToCSV(getRandomLotteries(group, type), filePath);
 
         return 0;
     }
