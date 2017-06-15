@@ -1,6 +1,7 @@
 package co.jp.batch;
 
 import co.jp.Abstract.AbstractPublic;
+import co.jp.Enums.LotteryType;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +52,7 @@ public class LotteryChecker extends AbstractPublic {
     @Override
     public int execute(Map<String, String> paramMap) throws Exception {
         LotteryAPI lotteryAPI = LotteryAPIFactory.createLotteryAPI();
-        String winNum = lotteryAPI.getLatestLotto("dlt");
+        String winNum = lotteryAPI.getLatestLotto(LotteryType.BIG_LOTTERY);
         checkLottery(winNum, "c://csv//lotteries.csv");
 
         return 0;

@@ -11,8 +11,13 @@ package co.jp.batch;
  */
 public class Test {
     public static void main(String[] args) {
-        LotteryAPI lotteryAPI = LotteryAPIFactory.createLotteryAPI();
-        System.out.println(lotteryAPI.getLatestLotto("dlt"));
+        String temp = "zhangsan:123";
+        String[] arr1 = temp.split(":", 0);
+        String[] arr2 = temp.split(":");
+
+        for (String bean : arr2) {
+            System.out.println(bean);
+        }
 
     }
     /*

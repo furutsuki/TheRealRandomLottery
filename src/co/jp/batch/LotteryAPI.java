@@ -1,6 +1,7 @@
 package co.jp.batch;
 
 
+import co.jp.Enums.LotteryType;
 
 /**
  * LotteryAPI.
@@ -16,6 +17,6 @@ public interface LotteryAPI {
      * @param lottoType
      * @return
      */
-    String getLatestLotto(String lottoType);
+    String getLatestLotto(LotteryType lottoType);
 
 }
