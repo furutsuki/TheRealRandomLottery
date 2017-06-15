@@ -11,19 +11,18 @@ public class LotteryAPIFactory {
 
     private static String net = "opencai";
 
+    private static LotteryAPI createLotteryAPI(String net) {
+        if ("opencai".equals(net)) {
+            return new OpenCaiLottery();
+        } else {
+            System.err.println("无效的彩票API网站");
+            return null;
+        }
+
+    }
+
     public static LotteryAPI createLotteryAPI() {
         return createLotteryAPI(net);
     }
-
-    public static LotteryAPI createLotteryAPI(String net) {
-        switch (net) {
-            case "opencai":
-                return new OpenCaiLottery();
-            default:
-                System.err.println("无效的彩票API网站");
-                return null;
-        }
-    }
-
 
 }

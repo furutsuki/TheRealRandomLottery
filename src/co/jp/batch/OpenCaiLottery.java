@@ -21,7 +21,6 @@ public class OpenCaiLottery implements LotteryAPI {
     private final String LOTTO_TYPE_DLT = "dlt";
 
 
-
     public static String getAPI(String lottoType, int row, String callbackType) {
         return String.format(freeAPI, lottoType, row, callbackType);
     }

@@ -1,8 +1,6 @@
 package co.jp.batch;
 
 
-import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * Test.
@@ -20,9 +18,9 @@ public class Test {
     /*
     todo
     http://www.opencai.net/apifree/
-    1、大乐透的彩票生成规则需要修改，后两位可以和前面重复？
+    1、(done)大乐透的彩票生成规则需要修改，后两位可以和前面重复？
     2、兑奖方式需要根据不同奖项的兑奖规则进行更改
-    3、写checker
+    3、(done)写checker
     4、generater需要根据不同彩票修改
      */
 }

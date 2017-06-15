@@ -10,7 +10,7 @@ public class BatchDriver {
 	public static void main(String[] args) {
 //		String[] strParameter= {"CakesGenerater","rows:100"};
 //		String[] strParameter= {"CakesChecker","PARAM1:deng chao wo"};
-//		String[] strParameter = {"LotteryGenerater", "group:10000000", "type:dlt"};
+//		String[] strParameter = {"LotteryGenerater", "group:1000000", "type:dlt"};
 		String[] strParameter = {"LotteryChecker", "param:none"};
 
 		Main.main(strParameter);

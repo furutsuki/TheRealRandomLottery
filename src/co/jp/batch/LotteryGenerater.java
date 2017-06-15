@@ -37,37 +37,32 @@ public class LotteryGenerater extends AbstractPublic{
         for (int i = 0; i < groups; i++) {
             List<Integer> lottery = new ArrayList<Integer>();
 
-            switch (type) {
-                //超级大乐透
-                case "dlt":
-                    while (lottery.size() != 5) {
-                        int number = secureRandom.nextInt(35) + 1;
-                        if (lottery.contains(number)) {
-                            continue;
-                        } else {
-                            lottery.add(number);
-                        }
-                    }
-                    Collections.sort(lottery);
-                    int bean1 = secureRandom.nextInt(12) + 1;
-                    int bean2 = secureRandom.nextInt(12) + 1;
-                    while (bean1 == bean2) {
-                        bean2 = secureRandom.nextInt(12) + 1;
-                    }
-                    if (bean1 < bean2) {
-                        lottery.add(bean1);
-                        lottery.add(bean2);
+            //超级大乐透
+            if ("dlt".equals(type)) {
+                while (lottery.size() != 5) {
+                    int number = secureRandom.nextInt(35) + 1;
+                    if (lottery.contains(number)) {
+                        continue;
                     } else {
-                        lottery.add(bean2);
-                        lottery.add(bean1);
+                        lottery.add(number);
                     }
-                    break;
-
-                default:
-                    return null;
+                }
+                Collections.sort(lottery);
+                int bean1 = secureRandom.nextInt(12) + 1;
+                int bean2 = secureRandom.nextInt(12) + 1;
+                while (bean1 == bean2) {
+                    bean2 = secureRandom.nextInt(12) + 1;
+                }
+                if (bean1 < bean2) {
+                    lottery.add(bean1);
+                    lottery.add(bean2);
+                } else {
+                    lottery.add(bean2);
+                    lottery.add(bean1);
+                }
+                lotteries.add(lottery);
             }
 
-            lotteries.add(lottery);
         }
 
         return lotteries;
