@@ -2,6 +2,7 @@ package co.jp.batch;
 
 
 import co.jp.Abstract.AbstractPublic;
+import co.jp.Enums.LotteryType;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,15 +31,14 @@ public class LotteryGenerater extends AbstractPublic{
      * @param type 彩票类型
      * @return
      */
-    private static List<List<Integer>> getRandomLotteries(int groups, String type) {
+    private static List<List<Integer>> getRandomLotteries(int groups, LotteryType type) {
         List<List<Integer>> lotteries = new ArrayList<List<Integer>>();
         SecureRandom secureRandom = new SecureRandom();
 
-        for (int i = 0; i < groups; i++) {
-            List<Integer> lottery = new ArrayList<Integer>();
-
-            //超级大乐透
-            if ("dlt".equals(type)) {
+        //超级大乐透
+        if (type == LotteryType.BIG_LOTTERY) {
+            for (int i = 0; i < groups; i++) {
+                List<Integer> lottery = new ArrayList<Integer>();
                 while (lottery.size() != 5) {
                     int number = secureRandom.nextInt(35) + 1;
                     if (lottery.contains(number)) {
@@ -62,8 +62,9 @@ public class LotteryGenerater extends AbstractPublic{
                 }
                 lotteries.add(lottery);
             }
-
         }
+
+
 
         return lotteries;
     }
@@ -104,8 +105,11 @@ public class LotteryGenerater extends AbstractPublic{
     @Override
     public int execute(Map<String, String> paramMap) throws Exception {
         int group = Integer.parseInt(paramMap.get("group"));
-        String type = paramMap.get("type");
+        LotteryType type = null;
         String filePath = "c:/csv/lotteries.csv";
+        if (paramMap.get("type").equals("dlt")) {
+            type = LotteryType.BIG_LOTTERY;
+        }
 
         listsToCSV(getRandomLotteries(group, type), filePath);
 

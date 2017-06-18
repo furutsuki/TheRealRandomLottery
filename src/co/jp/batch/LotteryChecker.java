@@ -1,12 +1,15 @@
 package co.jp.batch;
 
 import co.jp.Abstract.AbstractPublic;
+import co.jp.Bean.LotteryResult;
 import co.jp.Enums.LotteryType;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,24 +31,46 @@ public class LotteryChecker extends AbstractPublic {
     private void checkLottery(String winNum, String filepath) throws IOException {
         File file = new File(filepath);
         BufferedReader bufferedReader = null;
+        LotteryResult lotteryResult = new LotteryResult();
         int count = 0;
-        int row = 0;
+        int row = 1;
+        List<String> winPart1 = (List<String>)Arrays.asList(Arrays.copyOfRange(winNum.split(","), 0, 5));
+        List<String> winPart2 = (List<String>)Arrays.asList(Arrays.copyOfRange(winNum.split(","), 5, 7));
+        int countPart1 = 0;
+        int countPart2 = 0;
         if (file.exists()) {
             bufferedReader = new BufferedReader(new FileReader(file));
             String lottery;
             for(lottery = bufferedReader.readLine(); lottery != null; lottery = bufferedReader.readLine()) {
+                /*
                 if (winNum.equals(lottery)) {
                     System.out.println("[INFO] 恭喜你中奖了！意不意外？惊不惊喜？");
-                    System.out.println("row:" + (row + 1));
+                    System.out.println("row:" + row);
                     count++;
                 }
+                */
+                String[] lottPar1 = Arrays.copyOfRange(lottery.split(","), 0, 5);
+                String[] lottPar2 = Arrays.copyOfRange(lottery.split(","), 5, 7);
+                for(int i = 0; i < lottPar1.length; i++) {
+                    if (winPart1.contains(lottPar1[i])) {
+                        countPart1++;
+                    }
+                }
+                for(int j = 0; j < lottPar2.length; j++) {
+                    if (winPart2.contains(lottPar2[j])) {
+                        countPart2++;
+                    }
+                }
+                lotteryResult.savePrizeRecords(lottery, countPart1, countPart2);
+                countPart1 = 0;
+                countPart2 = 0;
                 row++;
             }
-            if (count == 0) {
-                System.out.println("[INFO] 你上缴了你的智商税... So Sad...");
-            }
         }
-        System.out.println("acmount:" + row);
+        System.out.println("总共购买注数：" + row);
+        System.out.println("总共消费金额：" + row*LotteryResult.UNIT_PRIZE);
+        System.out.println("总共中奖金额：" + lotteryResult.winAwards());
+        System.out.println("最终盈利：" + (lotteryResult.winAwards() - row*LotteryResult.UNIT_PRIZE));
 
     }
 

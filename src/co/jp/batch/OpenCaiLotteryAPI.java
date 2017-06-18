@@ -9,13 +9,13 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 
 /**
- * OpenCaiLottery.
+ * OpenCaiLotteryAPI.
  *
  * @author Dulk
  * @version 20170612
  * @date 2017/6/12
  */
-public class OpenCaiLottery implements LotteryAPI {
+public class OpenCaiLotteryAPI implements LotteryAPI {
 
     private static String freeAPI = "http://f.apiplus.net/%s-%d.%s";
 

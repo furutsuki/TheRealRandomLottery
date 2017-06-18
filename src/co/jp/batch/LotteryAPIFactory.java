@@ -13,7 +13,7 @@ public class LotteryAPIFactory {
 
     private static LotteryAPI createLotteryAPI(String net) {
         if ("opencai".equals(net)) {
-            return new OpenCaiLottery();
+            return new OpenCaiLotteryAPI();
         } else {
             System.err.println("无效的彩票API网站");
             return null;
