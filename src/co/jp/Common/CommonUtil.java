@@ -22,7 +22,7 @@ public class CommonUtil {
 	 * @param lst CSV出力するデータ
 	 * @param save ファイル保存モード（NEW,ADD）
 	 */
-	public static void writeCsv(String path, List<List<Integer>> lst, SaveMode savemode) {
+	public static void writeCsv(String path, List<? extends List<? extends Object>> lst, SaveMode savemode) {
 
 		String charSet = "UTF-8";
 
@@ -121,4 +121,4 @@ public class CommonUtil {
 	  }
 
 }
-// CodeCheck  ver1.1.10: 9d3e376a30a8846452c74db5d443ce021732c1bf3690f458bf3da95ec3e53e26
+// CodeCheck  ver1.1.10: b672aa1293b99e20dcd38d462eedef2db3e191cf4300ea637dfae8176462c3d3

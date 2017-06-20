@@ -70,6 +70,9 @@ public class CakesGenerater extends AbstractPublic {
 		String filepath = "c:\\csv\\cakes.csv";
 		int rows = Integer.valueOf(paramMap.get("rows"));
 		File file = new File(filepath);
+		if (file.exists()) {
+			file.delete();
+		}
 		while (rows > 0) {
 			int tmp = 0;
 			if (rows >= Constants.LIMIT_COUNT) {
@@ -93,4 +96,4 @@ public class CakesGenerater extends AbstractPublic {
 	}
 
 }
-// CodeCheck  ver1.1.10: c6465e9daec5a7affc737d5430cfbdbc3bac71b6eb50c1c1acb26099f31652a9
+// CodeCheck  ver1.1.10: 92f3f57dc9bfbc5dd8c108099add3c9703a78971085a42b38e1df52dfade7ee3

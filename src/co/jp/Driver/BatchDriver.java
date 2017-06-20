@@ -8,13 +8,14 @@ public class BatchDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		String[] strParameter= {"CakesGenerater","rows:100"};
-//		String[] strParameter= {"CakesChecker","PARAM1:deng chao wo"};
-//		String[] strParameter = {"LotteryGenerater", "group:5000000", "type:dlt"};
-		String[] strParameter = {"LotteryChecker", "param:none"};
+//		String[] strParameter= {"CakesGenerater","rows:1000"};
+		String[] strParameter= {"CakesChecker","PARAM1:deng chao wo"};
+//		String[] strParameter= {"CakesSelecter","rows:10","totalRows:100000000"};
+//		String[] strParameter = {"LotteryGenerater", "group:100000", "type:dlt"};
+//		String[] strParameter = {"LotteryChecker", "param:none"};
 
 		Main.main(strParameter);
 	}
 
 }
-// CodeCheck  ver1.1.10: 9df931eed055fb37e090ba866d8a6a1c0b65aa0988a65af233d57b3292a00499
+// CodeCheck  ver1.1.10: e3798bf70ec73da85fe9a9a2ecaded7e03a0c395809bfd848fe92488d72ea176
