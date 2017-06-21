@@ -33,7 +33,7 @@ public class LotteryChecker extends AbstractPublic {
         BufferedReader bufferedReader = null;
         LotteryResult lotteryResult = new LotteryResult();
         int count = 0;
-        int row = 1;
+        int row = 0;
         List<String> winPart1 = (List<String>)Arrays.asList(Arrays.copyOfRange(winNum.split(","), 0, 5));
         List<String> winPart2 = (List<String>)Arrays.asList(Arrays.copyOfRange(winNum.split(","), 5, 7));
         int countPart1 = 0;
@@ -45,19 +45,19 @@ public class LotteryChecker extends AbstractPublic {
                 /*
                 if (winNum.equals(lottery)) {
                     System.out.println("[INFO] 恭喜你中奖了！意不意外？惊不惊喜？");
-                    System.out.println("row:" + row);
+                    System.out.println("row:" + (row + 1));
                     count++;
                 }
                 */
-                String[] lottPar1 = Arrays.copyOfRange(lottery.split(","), 0, 5);
-                String[] lottPar2 = Arrays.copyOfRange(lottery.split(","), 5, 7);
-                for(int i = 0; i < lottPar1.length; i++) {
-                    if (winPart1.contains(lottPar1[i])) {
+                String[] lottPart1 = Arrays.copyOfRange(lottery.split(","), 0, 5);
+                String[] lottPart2 = Arrays.copyOfRange(lottery.split(","), 5, 7);
+                for(int i = 0; i < lottPart1.length; i++) {
+                    if (winPart1.contains(lottPart1[i])) {
                         countPart1++;
                     }
                 }
-                for(int j = 0; j < lottPar2.length; j++) {
-                    if (winPart2.contains(lottPar2[j])) {
+                for(int j = 0; j < lottPart2.length; j++) {
+                    if (winPart2.contains(lottPart2[j])) {
                         countPart2++;
                     }
                 }

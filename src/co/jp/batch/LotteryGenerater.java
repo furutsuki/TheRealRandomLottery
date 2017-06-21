@@ -80,12 +80,6 @@ public class LotteryGenerater extends AbstractPublic{
         File file = new File(filePath);
         if (file.exists()) {
             file.delete();
-        } else {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
         FileWriter fw = new FileWriter(file);
@@ -107,7 +101,7 @@ public class LotteryGenerater extends AbstractPublic{
         int group = Integer.parseInt(paramMap.get("group"));
         LotteryType type = null;
         String filePath = "c:/csv/lotteries.csv";
-        if (paramMap.get("type").equals("dlt")) {
+        if ("dlt".equals(paramMap.get("type"))) {
             type = LotteryType.BIG_LOTTERY;
         }
 
