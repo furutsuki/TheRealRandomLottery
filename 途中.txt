@@ -1,0 +1,32 @@
+CREATE OR REPLACE PROCEDURE "TEST0627"
+( out_para           OUT NUMBER) AS
+ var_ins             VARCHAR2(32767):='';
+ var_sql             VARCHAR2(32767):='';
+ var_select          VARCHAR2(4096):='';
+ tojitsu             VARCHAR2(8):='';  -- 当日
+ togetsu             VARCHAR2(6):='';  -- 当月
+ zengetsu            VARCHAR2(6):='';  -- 前月
+ shm_before          VARCHAR2(32767):='';  -- 締め前システム運用企業コードリスト
+ shm_after           VARCHAR2(32767):='';  -- 締め後システム運用企業コードリスト
+ rec                 VARCHAR2(10):='';
+ gosa_cnt            NUMBER(10):=0;
+
+ BEGIN
+  -- 当日、当月、前月を取得
+  var_select := 'SELECT GROUP_EGYB, SUBSTR(GROUP_EGYB, 1, 6), TO_CHAR(ADD_MONTHS(TO_DATE(GROUP_EGYB, ''YYYYMMDD''), -1), ''YYYYMM'')';
+  var_select := var_select || 'FROM M_YAKANHIZUKEKANRIMST WHERE GROUP_CODE =''0000''';
+
+  BEGIN
+    EXECUTE IMMEDIATE(var_select) INTO tojitsu, togetsu, zengetsu;
+  EXCEPTION
+    -- 取得できなかった場合、処理終了
+    WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('夜間日付管理マスタに該当するデータが存在しませんでした。' );
+      out_para := 10;
+      GOTO ERR_RESULT;
+  END;
+  -- 正常終了
+  out_para := 5;
+<<ERR_RESULT>>
+  NULL;
+ END TEST0627;
