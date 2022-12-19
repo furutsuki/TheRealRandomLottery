@@ -7,3 +7,59 @@ ITEC:
 https://www.itec.co.jp/store/
 00077-k7ovf1
 
+Sub createEviFile()
+    Dim sht As Worksheet
+    Dim name As String
+    Dim cnt As Integer
+    
+    Dim newBookName As String
+    Dim newBookPath As String
+    Dim newBook As Workbook
+    
+    
+    
+    Set sht = Worksheets("愝掕")
+    name = sht.Range("B3").Value
+    cnt = sht.Range("D3").Value
+    
+    
+    ' 怴BOOK嶌惉
+    Set newBook = Workbooks.Add
+    
+    newBookName = name & ".xlsx"
+    '怴偟偄僼傽僀儖偺僼儖僷僗傪愝掕
+    newBookPath = "C:\Users\層桟揘\OneDrive - 僷乕僜儖僀僲儀乕僔儑儞姅幃夛幮\僪僉儏儊儞僩\evi\" & newBookName
+    
+        '巜掕偟偨僷僗偵僼傽僀儖偑嶌惉嵪偱側偄偐傪妋擣丅
+    If Dir(newBookPath) <> "" Then
+        '婛偵摨柤偺僼傽僀儖偑懚嵼偡傞応崌偼儊僢僙乕僕傪昞帵
+        MsgBox "婛偵" & newBookName & "偲偄偆僼傽僀儖偼懚嵼偟傑偡丅"
+        End
+    End If
+    
+    newBook.Worksheets.Add Count:=(cnt - 1)
+    
+    Dim cnts As Integer
+    
+    
+    For cnts = 1 To cnt
+        newBook.Worksheets(cnts).name = cnts
+        newBook.Worksheets(cnts).Select
+        ActiveWindow.Zoom = 80
+    Next cnts
+    
+    
+    newBook.Worksheets(1).Select
+    
+
+    
+    '怴偟偄僼傽僀儖傪VBA傪幚峴偟偨僼傽僀儖偲摨偠僼僅儖僟曐懚
+    newBook.SaveAs newBookPath
+
+    newBook.Close
+    
+    
+    
+End Sub
+
+
